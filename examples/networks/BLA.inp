@@ -163,7 +163,7 @@ blacksburg -- Bragalli, D'Ambrosio, Lee, Lodi, Toth (2008)
  Trials             	40
  Accuracy           	0.001
  Unbalanced         	Continue 10
- Pattern            	2
+ Pattern            	1
  Demand Multiplier  	1.0
  Emitter Exponent   	0.5
  Quality            	None mg/L
@@ -201,19 +201,7 @@ blacksburg -- Bragalli, D'Ambrosio, Lee, Lodi, Toth (2008)
  27              	4729.52         	6939.72         
  28              	3384.85         	8129.83         
  29              	3400.31         	6615.15         
- 30              	4018.55         	6151.47         
- 1_2             	5533.23         	5795.98         
- 1_8             	3755.80         	4884.08         
- 2_11            	6460.59         	7944.36         
- 3_17            	8021.64         	9938.18         
- 5_6             	1638.33         	4868.62         
- 8_30            	3740.34         	5687.79         
- 14_23           	7017.00         	4559.51         
- 15_17           	7187.02         	9675.43         
- 18_24           	9335.39         	5749.61         
- 21_20           	2457.50         	4265.84         
- 26_9            	4528.59         	7789.80         
- 0               	1808.35         	2411.13         
+ 30              	4018.55         	6151.47                 
 
 [VERTICES]
 ;Link            	X-Coord         	Y-Coord

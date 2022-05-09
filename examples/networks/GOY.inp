@@ -31,11 +31,10 @@ EPANET Example (Goyang in Original)
   22   61.80	9.253
 
 [TANKS]
-;-----------
-;      Elev 
-; ID	m   
-;------------
-  30   71.0
+;ID              	Elevation   	InitLevel   	MinLevel    	MaxLevel    	Diameter    	MinVol      	VolCurve
+;-------------------------------------------------------------------------------------------------------------------------------------
+  30   			71.0		15		5		25		120		0		*
+
 
 [PIPES]
 ;------------------------------------------------
@@ -75,13 +74,13 @@ EPANET Example (Goyang in Original)
 
 [PUMPS]
 ;----------------------------------
-;    Head   Tail  Pump Power Rating
-;ID  Node   Node	 kW
+;    Head   Tail  Properties
+;ID  Node   Node	 
 ;----------------------------------
- 70   30      1         4.52
+ 70   30      1         POWER 4.52
 
 [OPTIONS]
-Units SI
+Units              	CMH
 Headloss H-W
 [COORDINATES]
 ;Node            	X-Coord         	Y-Coord
