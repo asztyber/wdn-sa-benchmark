@@ -1,5 +1,8 @@
 import wntr
 import matplotlib.pyplot as plt
+import os
+import json
+import numpy as np
 
 
 class EpanetConverter():
@@ -46,7 +49,11 @@ class EpanetConverter():
 
         flow_sensors.sort()
         pressure_sensors.sort()
+        self.pressure_sensors = pressure_sensors
+        self.flow_sensors = flow_sensors
         self.sensors = [flow_prefix + s for s in flow_sensors] + [pressure_prefix + s for s in pressure_sensors]
+
+        self.model = dict()
 
     def flow_balance_eqs(self):
         flow_balance_eq = dict()
@@ -116,7 +123,23 @@ class EpanetConverter():
         model.update(sensor_eq)
 
         sa_model = {'model': model, 'unknown': unknown, 'known': known, 'faults': self.faults}
-        return sa_model
+        self.model = sa_model
+
+    def save_files(self, output_folder, network_name):
+        output_name = network_name + '_' + str(len(self.pressure_sensors)) + '_' + str(len(self.flow_sensors))
+        output_name = output_name + '_' + str(len(self.leaks))
+        file_name = output_name + '.json'
+        with open(os.path.join(output_folder, file_name), 'w') as f:
+            json.dump(self.model, f)
+
+        # name maps
+        eq_name_map_file_name = output_name + '_eq_name_map.json'
+        with open(os.path.join(output_folder, eq_name_map_file_name), 'w') as f:
+            json.dump(self.eq_name_map, f)
+
+        f_name_map_file_name = output_name + '_f_name_map.json'
+        with open(os.path.join(output_folder, f_name_map_file_name), 'w') as f:
+            json.dump(self.f_name_map, f)
 
 
 def network_preview(input_file_name):
@@ -129,3 +152,18 @@ def network_preview(input_file_name):
     wntr.graphics.network.plot_network(wn, node_attribute=wn.node_name_list, node_labels=True, link_labels=True,
                                        node_cmap=['lightgray'], node_size=150)
     plt.show()
+
+
+def create_random_model(network_name, n_pressure_sensors, n_flow_sensors, n_leaks, sensor_faults=True,
+                        input_folder='examples/networks'):
+    input_file_name = network_name + '.inp'
+    input_file_path = os.path.join(input_folder, input_file_name)
+
+    wn = wntr.network.WaterNetworkModel(input_file_path)
+    pressure_sensors = np.random.choice(wn.node_name_list, n_pressure_sensors, replace=False)
+    flow_sensors = np.random.choice(wn.link_name_list, n_flow_sensors, replace=False)
+    leaks = np.random.choice(wn.node_name_list, n_leaks, replace=False)
+
+    epn_conv = EpanetConverter(input_file_path, pressure_sensors, flow_sensors, leaks)
+    epn_conv.structural_from_epanet()
+    return epn_conv
