@@ -1,6 +1,4 @@
 from network_converter import EpanetConverter
-import json
-import os
 
 input_file_name = 'examples/networks/TLN.inp'
 output_folder = 'examples/structural_models'

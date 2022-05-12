@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Own
+tmp/
+examples/networks/TLN2.inp
+t_tln_plot.py
