@@ -1,10 +1,13 @@
 from network_converter import EpanetConverter
 
-configurations = [('TLN', 7, 0, 7, False),
+# (network name, number of pressure sensors, number of flow sensors, number of faults, bool - if add sensor faults)
+configurations = [('TLN', 2, 0, 2, False),
+                  ('TLN', 7, 0, 7, False),
                   ('TRN', 12, 0, 12, False),
                   ('BAK', 4, 0, 36, False),
                   ('NYT', 7, 0, 20, False),
                   ('BLA', 4, 0, 31, False),
+                  ('HAN', 4, 0, 16, False),
                   ('HAN', 4, 0, 32, False),
                   ('GOY', 4, 0, 23, False),
                   ('FOS', 4, 0, 37, False),

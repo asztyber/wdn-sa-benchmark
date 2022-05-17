@@ -1,7 +1,7 @@
 import faultdiagnosistoolbox as fdt
 import json
 
-with open('examples/structural_models/TLN_7_0_7.json', 'r') as f:
+with open('examples/structural_models/PES_8_0_22.json', 'r') as f:
     data = json.load(f)
 
 sm = data['model']
@@ -19,7 +19,7 @@ print('unknown: ', model_def['x'])
 print('known: ', model_def['z'])
 print('faults: ', model_def['f'])
 
-model = fdt.DiagnosisModel(model_def, name='TLN')
+model = fdt.DiagnosisModel(model_def)
 model.Lint()
 
 mtes = model.MTES()
