@@ -3,13 +3,8 @@ Tool for creating water distribution network examples for structural analysis di
 
 ## Installation
 
-[TODO
-* change branch to `main` after this is merged
-* change to a pypi package installation, after the release
-]
-
 ```
-pip3 install git+https://github.com/asztyber/wdn-sa-benchmark.git@refactor
+pip3 install git+https://github.com/asztyber/wdn-sa-benchmark.git
 ```
 
 Or for the development purposes:
@@ -17,7 +12,6 @@ Or for the development purposes:
 ```
 git clone https://github.com/asztyber/wdn-sa-benchmark.git
 cd wdn-sa-benchmark
-git checkout refactor  # [TODO: remove when this is merged]
 pip3 install .
 ```
 
@@ -63,12 +57,11 @@ Library usage:
 * `examples/convert.py` - convert an INP file to a structural model with a predefined set of parameters
 * `examples/convert_random.py` - convert an INP file to a structural model with random placement of sensors and leaks
 * `examples/network_preview.py` - prints basic network information and plots the network structural_from_epanet
-[TODO, also mention the additional visualization requirement]
 
 Scripts that don't use the library, but utilize the assets and/or library output:
 * `examples/fdt.py` - exemplary reading of structural model benchmark in Pyton and MSO and MTES sets calculation with
 faultdiagnosistoolbox
-* `examples/....m`  - [TODO]
+* `examples/Matlab_examples`  - Matlab examples
 
 ## Assets
 
