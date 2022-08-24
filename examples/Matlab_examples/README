@@ -1,0 +1,11 @@
+Examples to calculate diagnosis tests using structural analysis algorithms developed in Matlab applied to three water distribution networks.
+
+INSTALLATION:
+
+to run the *.m files:
+
+addpath('Struct_Analysis - V2-1.1')
+addpath('src')
+
+These folders are located in:
+https://github.com/UqbarTertius/Struct_Analysis---V2-1.2.git
