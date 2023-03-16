@@ -76,10 +76,14 @@ class EpanetConverter():
         pressure_sensors: Optional[Union[List, int]] = None,
         flow_sensors: Optional[Union[List, int]] = None,
         leaks: Optional[Union[List, int]] = None,
+        demands: Optional[Union[List, int]] = None,
         sensor_faults: bool = False,
         pressure_prefix: str = 'p',
         flow_prefix: str = 'q',
         leak_prefix: str = 'f',
+        demand_prefix: str = 'd',
+        pumps: Optional[List] = None,
+        tanks: Optional[List] = None,
         seed: int = None,
     ):
         self.input_file_name = input_file_name
@@ -92,11 +96,15 @@ class EpanetConverter():
 
         self.pressure_sensors = self._parse_pressure_sensors(pressure_sensors)
         self.flow_sensors = self._parse_flow_sensors(flow_sensors)
+        self.demands = self._parse_demands(demands)
         self.leaks = self._parse_leaks(leaks)
+        self.pumps = pumps
+        self.tanks = tanks
 
         self.pressure_prefix = pressure_prefix
         self.flow_prefix = flow_prefix
         self.leak_prefix = leak_prefix
+        self.demand_prefix = demand_prefix
         self.sensor_faults = sensor_faults
 
         self.eq_cnt = -1
@@ -105,7 +113,8 @@ class EpanetConverter():
         self.f_name_map = dict()
         self.faults = []
         self.sensors = [flow_prefix + s for s in self.flow_sensors] + \
-            [pressure_prefix + s for s in self.pressure_sensors]
+            [pressure_prefix + s for s in self.pressure_sensors] + \
+            [demand_prefix + s for s in self.demands]
         self.model = dict()
 
     def _flow_balance_eqs(self):
@@ -125,10 +134,17 @@ class EpanetConverter():
                 fs = [f]
             else:
                 fs = []
+            if node in self.demands:
+                d_name = self.demand_prefix + node_name
+                ds = [d_name]
+            else:
+                ds = []
             qis = [self.flow_prefix + name for e in list(set(self.G.edges(node)))
                    for name in self.G.get_edge_data(*e).keys()]
             qis = sorted(qis)
-            flow_balance_eq[eq] = qis + fs
+            if self.tanks is not None and node in self.tanks:
+                qis.append(node_name)
+            flow_balance_eq[eq] = qis + fs + ds
 
         return flow_balance_eq
 
@@ -140,7 +156,10 @@ class EpanetConverter():
             self.eq_cnt += 1
             eq = 'e' + str(self.eq_cnt)
             self.eq_name_map[eq] = eq_name
-            pipe_eq[eq] = sorted([q_name, p1_name, p2_name])
+            if self.pumps is None or q not in self.pumps:
+                pipe_eq[eq] = sorted([q_name, p1_name, p2_name])
+            else:
+                pipe_eq[eq] = [q_name]
 
         return pipe_eq
 
@@ -154,9 +173,9 @@ class EpanetConverter():
             sensor_eq[eq] = [s, 'm' + s]
             if self.sensor_faults:
                 f_name = 'fm' + s
-                sensor_eq[eq].append(f_name)
                 self.f_cnt += 1
                 f = 'f' + str(self.f_cnt)
+                sensor_eq[eq].append(f)
                 self.f_name_map[f] = f_name
                 self.faults.append(f)
         return sensor_eq
@@ -239,6 +258,14 @@ class EpanetConverter():
             return sorted(leaks)
         else:
             return np.random.choice(self.wn.node_name_list, leaks, replace=False)
+        
+    def _parse_demands(self, demands: Optional[Union[List[str], int]]) -> List[str]:
+        if demands is None:
+            return []
+        elif isinstance(demands, list):
+            return sorted(demands)
+        else:
+            return np.random.choice(self.wn.node_name_list, demands, replace=False)
 
 
 def network_preview(input_file_name, node_labels=True, link_labels=True, node_size=150):
