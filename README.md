@@ -66,6 +66,9 @@ faultdiagnosistoolbox
 ## Assets
 
 * `networks` - water network structures in .inp format (used as na input for conversion to structural model)
+
+  Additionally L-TOWN network was provided in two versions: L-TOWN (original) and L-TOWN_simplified (skeletonized). The file L-TOWN_simplified_node_name_map.json provides a mapping from the nodes of the original network to the nodes of the simplified one.
+
 * `structural_models` - structural models for the water networks. The naming convention is as follows:
 [network name]\_[number of pressure sensors]\_[number of flow sensors]\_[number of leaks]
 Structural model is saved in json format as a dictionary with fields:
@@ -80,3 +83,14 @@ Structural model is saved in json format as a dictionary with fields:
    - pressures are labelled with letter _p_ and a number corresponding to the junction number in .inp file, i.e. _p1_ is pressure in a junction with id _1_,
    - faults are labelled with letter _f_ and are sequentially numbered from 0,
    - measurements are labelled with prefix _m_ and variable name.
+
+ 
+
+* `measurements` - simulated measurements for L-TOWN network including leaks, faults and cyber attacks
+  - .xlsx files contain measurements
+  - .yaml files describe the configuration of leaks, faults and cyber attacks
+
+
+## L-TOWN
+ * https://zenodo.org/record/4017659 - the source of the L-TOWN.inp file
+ * https://github.com/KIOS-Research/BattLeDIM - code from this repo was extended with the simulation of faults and cyber-attacks to provide measurement data for scenarios 1 and 2 
