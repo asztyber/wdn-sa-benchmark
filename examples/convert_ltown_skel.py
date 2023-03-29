@@ -24,7 +24,7 @@ demands = [full_skel_node_name_map[n] for n in demands]
 demands = sorted(set(demands))
 
 epn_conv = EpanetConverter(input_file_name, pressure_sensors=pressure_sensors, flow_sensors=flow_sensors,
-                           leaks=None, sensor_faults=True, pumps=['PUMP_1'], tanks=['T1'], demands=demands,
+                           leaks=20, sensor_faults=False, pumps=['PUMP_1'], tanks=['T1'], demands=demands,
                            pressure_prefix='', flow_prefix='')
 epn_conv.structural_from_epanet()
 

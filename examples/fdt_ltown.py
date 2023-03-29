@@ -1,7 +1,7 @@
 import faultdiagnosistoolbox as fdt
 import json
 
-with open('output/L-TOWN_simplified_34_3_295.json', 'r') as f:
+with open('structural_models/L-TOWN_simplified_34_3_20.json', 'r') as f:
     data = json.load(f)
 
 sm = data['model']
