@@ -38,12 +38,18 @@ class EpanetConverter():
     sensor_faults : bool, default=False
         * If True, then sensors faults are added to the model. Faults are added for all existing sensors
         (both pressure and flow)
+    pumps: Optional[List], default = None,
+        * List of the pipes containing pumps
+    tanks: Optional[List], default = None,
+        * List of the nodes containing tanks
     pressure_prefix : str, default='p'
         Prefix for pressure variables names in the model. The prefix is followed by a node id.
     flow_prefix : str, default='q'
         Prefix for flow variables names in the model. The prefix is followed by a pipe id.
     leak_prefix : default='f'
         Prefix for leak variables names in the model. The prefix is followed by a fault number.
+    demand_prefix : default='d'
+        Prefix for demand variables names in the model. The prefix is followed by a node id.
     seed : int, default=None
         Random generatior seed for random model generation.
 
