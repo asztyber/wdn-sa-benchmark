@@ -1,7 +1,7 @@
 import faultdiagnosistoolbox as fdt
 import json
 
-with open('structural_models/L-TOWN_simplified_34_3_20.json', 'r') as f:
+with open('structural_models/L-TOWN_simplified_34_3_15.json', 'r') as f:
     data = json.load(f)
 
 sm = data['model']
@@ -24,6 +24,13 @@ model.Lint()
 
 mtes = model.MTES()
 print("number of TES: ", len(mtes))
+
+mtes = [[int(x) for x in list(m)] for m in mtes]
+lengths = [len(m) for m in mtes]
+print(lengths)
+file_name = 'output/ltown_mtes.json'
+with open(file_name, 'w') as f:
+    json.dump(mtes, f)
 
 isol = model.IsolabilityAnalysisArrs(mtes)
 print('unambiguity groups: ', isol.sum(axis=1))
